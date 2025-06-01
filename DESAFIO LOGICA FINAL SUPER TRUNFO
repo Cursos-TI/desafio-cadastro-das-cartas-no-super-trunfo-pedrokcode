@@ -31,13 +31,21 @@ int main(){
     float densidade2;
     float superpoder2;
 
-    // Calculo das variaveis
+    // Calculo das variaveis 1
 
     densidade = populacao / area;
 
     pib_per_capita = pib / populacao;
 
     superpoder = pib + populacao + area + turisticos + pib_per_capita;
+
+    // Calculo das variaveis 2
+
+    densidade2 = populacao2 / area2;
+
+    pib_per_capita2 = pib2 / populacao2;
+
+    superpoder2 = pib2 + populacao2 + area2 + turisticos2 + pib_per_capita2;
 
     // Inicio do jogo
 
@@ -232,12 +240,6 @@ int main(){
     printf("ÁREA: %e km²\n", area2);
     printf("PIB: %e bilhões de reais\n", pib2);
     printf("PONTOS TURISTICOS: %d\n", turisticos2);
-
-    densidade2 = populacao2 / area2;
-
-    pib_per_capita2 = pib2 / populacao2;
-
-    superpoder2 = pib2 + populacao2 + area2 + turisticos2 + pib_per_capita2;
 
     printf("DENSIDADE POPULACIONAL: %.2f hab/km²\n", densidade2);
     printf("PIB PER CAPITA: %.2f reais\n", pib_per_capita2);
