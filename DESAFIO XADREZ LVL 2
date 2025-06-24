@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int i;
+
+    // --- Torre: 5 casas para a direita (for)
+    printf("Movimento da Torre:\n");
+    for(i = 0; i < 5; i++) {
+        printf("Direita\n");
+    }
+
+    // --- Bispo: 5 casas na diagonal (while)
+    printf("\nMovimento do Bispo:\n");
+    i = 0;
+    while(i < 5) {
+        printf("Cima Direita\n");
+        i++;
+    }
+
+    // --- Rainha: 8 casas para a esquerda (do-while)
+    printf("\nMovimento da Rainha:\n");
+    i = 0;
+    do {
+        printf("Esquerda\n");
+        i++;
+    } while(i < 8);
+
+    // --- Cavalo: Movimento em "L" com loops aninhados
+    // Duas casas para baixo (for), uma casa para a esquerda (while)
+    printf("\nMovimento do Cavalo:\n");
+
+    // Loop externo com for: duas casas para baixo
+    for(i = 0; i < 2; i++) {
+        printf("Baixo\n");
+    }
+
+    // Loop interno com while: uma casa para a esquerda
+    int j = 0;
+    while(j < 1) {
+        printf("Esquerda\n");
+        j++;
+    }
+
+    return 0;
+}
