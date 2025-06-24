@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define TAMANHO_TABULEIRO 10
+#define TAMANHO_NAVIO 3
+#define AGUA 0
+#define NAVIO 3
+
+int main() {
+    int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
+
+    // Inicializa o tabuleiro com 0 (água)
+    for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            tabuleiro[i][j] = AGUA;
+        }
+    }
+
+    // Coordenadas iniciais dos navios (definidas diretamente)
+    int linhaNavioH = 2, colunaNavioH = 1; // Horizontal (linha fixa)
+    int linhaNavioV = 5, colunaNavioV = 7; // Vertical (coluna fixa)
+
+    bool posicaoValida = true;
+
+    // --- Validação do navio horizontal ---
+    if (colunaNavioH + TAMANHO_NAVIO > TAMANHO_TABULEIRO) {
+        posicaoValida = false;
+    } else {
+        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+            if (tabuleiro[linhaNavioH][colunaNavioH + i] == NAVIO) {
+                posicaoValida = false;
+                break;
+            }
+        }
+    }
+
+    if (posicaoValida) {
+        // Posiciona navio horizontal (linha constante, colunas consecutivas)
+        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[linhaNavioH][colunaNavioH + i] = NAVIO;
+        }
+    }
+
+    // --- Validação do navio vertical ---
+    posicaoValida = true;
+
+    if (linhaNavioV + TAMANHO_NAVIO > TAMANHO_TABULEIRO) {
+        posicaoValida = false;
+    } else {
+        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+            if (tabuleiro[linhaNavioV + i][colunaNavioV] == NAVIO) {
+                posicaoValida = false;
+                break;
+            }
+        }
+    }
+
+    if (posicaoValida) {
+        // Posiciona navio vertical (coluna constante, linhas consecutivas)
+        for (int i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[linhaNavioV + i][colunaNavioV] = NAVIO;
+        }
+    }
+
+    // --- Exibe o tabuleiro ---
+    printf("\nTabuleiro Batalha Naval:\n\n");
+    for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
