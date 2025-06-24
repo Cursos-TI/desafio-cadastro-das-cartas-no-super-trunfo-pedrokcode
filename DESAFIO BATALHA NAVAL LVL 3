@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define TAM 10
+#define H 5        // Tamanho das matrizes de habilidade
+#define NAVIO 3
+#define AGUA 0
+#define HABILIDADE 5
+
+// Inicializa o tabuleiro com água
+void inicializarTabuleiro(int tab[TAM][TAM]) {
+    for (int i = 0; i < TAM; i++)
+        for (int j = 0; j < TAM; j++)
+            tab[i][j] = AGUA;
+}
+
+// Posiciona um navio fixo para visualização
+void posicionarNavioSimples(int tab[TAM][TAM]) {
+    tab[2][2] = NAVIO;
+    tab[2][3] = NAVIO;
+    tab[2][4] = NAVIO;
+}
+
+// Gera matriz de habilidade Cone
+void gerarCone(int matriz[H][H]) {
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < H; j++) {
+            int meio = H / 2;
+            matriz[i][j] = (j >= meio - i && j <= meio + i) ? 1 : 0;
+        }
+    }
+}
+
+// Gera matriz de habilidade Cruz
+void gerarCruz(int matriz[H][H]) {
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < H; j++) {
+            matriz[i][j] = (i == H / 2 || j == H / 2) ? 1 : 0;
+        }
+    }
+}
+
+// Gera matriz de habilidade Octaedro (losango)
+void gerarOctaedro(int matriz[H][H]) {
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < H; j++) {
+            int d = abs(i - H / 2) + abs(j - H / 2);
+            matriz[i][j] = (d <= H / 2) ? 1 : 0;
+        }
+    }
+}
+
+// Sobrepõe matriz de habilidade no tabuleiro
+void aplicarHabilidade(int tab[TAM][TAM], int habilidade[H][H], int origemLinha, int origemColuna) {
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < H; j++) {
+            if (habilidade[i][j] == 1) {
+                int l = origemLinha - H / 2 + i;
+                int c = origemColuna - H / 2 + j;
+                if (l >= 0 && l < TAM && c >= 0 && c < TAM && tab[l][c] == AGUA) {
+                    tab[l][c] = HABILIDADE;
+                }
+            }
+        }
+    }
+}
+
+// Exibe o tabuleiro com legenda visual
+void exibirTabuleiro(int tab[TAM][TAM]) {
+    printf("\nLegenda: 0=Água ~ 3=Navio ⛴️ ~ 5=Habilidade ✨\n\n");
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            printf("%d ", tab[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int tabuleiro[TAM][TAM];
+    int cone[H][H], cruz[H][H], octaedro[H][H];
+
+    inicializarTabuleiro(tabuleiro);
+    posicionarNavioSimples(tabuleiro);
+
+    // Geração das áreas de efeito
+    gerarCone(cone);
+    gerarCruz(cruz);
+    gerarOctaedro(octaedro);
+
+    // Aplicação sobre o tabuleiro com ponto de origem
+    aplicarHabilidade(tabuleiro, cone, 1, 2);
+    aplicarHabilidade(tabuleiro, cruz, 5, 5);
+    aplicarHabilidade(tabuleiro, octaedro, 7, 2);
+
+    // Exibição final
+    exibirTabuleiro(tabuleiro);
+
+    return 0;
+}
