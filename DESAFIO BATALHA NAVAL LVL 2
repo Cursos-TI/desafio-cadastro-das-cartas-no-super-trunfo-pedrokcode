@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define TAMANHO 10
+#define NAVIO 3
+#define OCUPADO 3
+#define AGUA 0
+
+// Função auxiliar para validar se as posições estão dentro do tabuleiro
+bool dentroDosLimites(int linha, int coluna) {
+    return linha >= 0 && linha < TAMANHO && coluna >= 0 && coluna < TAMANHO;
+}
+
+// Verifica se as posições do navio estão livres
+bool posicaoLivre(int tab[TAMANHO][TAMANHO], int l[], int c[]) {
+    for (int i = 0; i < NAVIO; i++) {
+        if (!dentroDosLimites(l[i], c[i]) || tab[l[i]][c[i]] == OCUPADO)
+            return false;
+    }
+    return true;
+}
+
+// Posiciona o navio no tabuleiro
+void posicionarNavio(int tab[TAMANHO][TAMANHO], int l[], int c[]) {
+    for (int i = 0; i < NAVIO; i++) {
+        tab[l[i]][c[i]] = OCUPADO;
+    }
+}
+
+// Exibe o tabuleiro
+void exibirTabuleiro(int tab[TAMANHO][TAMANHO]) {
+    printf("\nTabuleiro
